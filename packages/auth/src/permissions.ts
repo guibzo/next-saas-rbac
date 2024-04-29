@@ -10,12 +10,23 @@ type PermissionsByRole = (
 ) => void
 
 export const permissions: Record<Role, PermissionsByRole> = {
-  ADMIN: (_, { can }) => {
+  ADMIN: (user, { can, cannot }) => {
     can('manage', 'all')
+
+    // since this entity has all permissions, the "cannot" can't be given conditionals (it wont work)
+    cannot(['transfer_ownership', 'update'], 'Organization')
+    can(['transfer_ownership', 'update'], 'Organization', {
+      ownerId: { $eq: user.id },
+    })
   },
+
   MEMBER: (user, { can }) => {
+    can('get', 'User')
     can(['create', 'get'], 'Project')
     can(['update', 'delete'], 'Project', { ownerId: { $eq: user.id } })
   },
-  BILLING: () => {},
+
+  BILLING: (_, { can }) => {
+    can('manage', 'Billing') // all actions on billing
+  },
 }
