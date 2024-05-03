@@ -2,6 +2,16 @@
 
 This project contains all the necessary boilerplate to setup a multi-tenant SaaS with Next.js including authentication and RBAC authorization.
 
+```json
+Apps/API
+  - npm prisma migrate dev
+  - npm prisma generate
+  - npm prisma db seed
+
+  - npm run docker:start
+  - npm run dev
+```
+
 ## Features
 
 ### Authentication
@@ -75,6 +85,7 @@ Roles & permissions.
 > ✅ = allowed
 > ❌ = not allowed
 > 🟡 = allowed w/ conditions
+
 #### Conditions
 
 - Only owners may transfer organization ownership;
