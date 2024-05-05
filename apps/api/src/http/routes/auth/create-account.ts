@@ -17,6 +17,11 @@ export const createAccount = async (app: FastifyInstance) => {
           email: z.string().email(),
           password: z.string().min(6),
         }),
+        response: {
+          409: z.object({
+            message: z.string(),
+          }),
+        },
       },
     },
     async (request, reply) => {
