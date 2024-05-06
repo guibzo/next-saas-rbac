@@ -13,7 +13,7 @@ export const resetPassword = async (app: FastifyInstance) => {
     {
       schema: {
         tags: ['auth'],
-        summary: 'Request password recover.',
+        summary: 'Request password reset.',
         body: z.object({
           code: z.string(),
           newPassword: z.string().min(6),
