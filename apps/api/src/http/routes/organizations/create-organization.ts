@@ -4,7 +4,6 @@ import z from 'zod'
 
 import { authMiddleware } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
-import { sanitizeSlug } from '@/utils/sanitize-slug'
 
 import { BadRequestError } from '../@errors/bad-request-error'
 
@@ -49,11 +48,9 @@ export const createOrganization = async (app: FastifyInstance) => {
           }
         }
 
-        const sanitizedSlug = sanitizeSlug(name)
-        const organization = await prisma.organization.create({
+        const organization = await prisma.organization.createWithSlug({
           data: {
             name,
-            slug: sanitizedSlug,
             domain,
             shouldAttachUsersByDomain,
             ownerId: userId,
@@ -64,6 +61,9 @@ export const createOrganization = async (app: FastifyInstance) => {
               },
             },
           },
+          sourceField: 'name',
+          targetField: 'slug',
+          unique: true,
         })
 
         return reply.status(201).send({
