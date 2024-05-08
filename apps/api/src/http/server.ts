@@ -18,6 +18,7 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
+import { getOrganizationMembers } from './routes/members/get-organization-members'
 import { createOrganization } from './routes/organizations/create-organization'
 import { getOrganization } from './routes/organizations/get-organization'
 import { getOrganizationMembership } from './routes/organizations/get-organization-membership'
@@ -27,6 +28,9 @@ import { transferOrganizationOwnership } from './routes/organizations/transfer-o
 import { updateOrganization } from './routes/organizations/update-organization'
 import { createProject } from './routes/projects/create-project'
 import { deleteProject } from './routes/projects/delete-project'
+import { getProject } from './routes/projects/get-project'
+import { getProjects } from './routes/projects/get-projects'
+import { updateProject } from './routes/projects/update-project'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -82,6 +86,12 @@ app.register(transferOrganizationOwnership)
 // projects routes
 app.register(createProject)
 app.register(deleteProject)
+app.register(updateProject)
+app.register(getProject)
+app.register(getProjects)
+
+// members routes
+app.register(getOrganizationMembers)
 
 app
   .listen({
