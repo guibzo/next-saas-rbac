@@ -1,6 +1,6 @@
 import { defineAbilityFor, type Role, userSchema } from '@saas/auth'
 
-export const getUserPermissions = async (userId: string, role: Role) => {
+export const getUserPermissions = (userId: string, role: Role) => {
   const authPackageUser = userSchema.parse({
     id: userId,
     role,
