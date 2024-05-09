@@ -19,6 +19,8 @@ import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
 import { getOrganizationMembers } from './routes/members/get-organization-members'
+import { removeMember } from './routes/members/remove-member'
+import { updateMember } from './routes/members/update-member'
 import { createOrganization } from './routes/organizations/create-organization'
 import { getOrganization } from './routes/organizations/get-organization'
 import { getOrganizationMembership } from './routes/organizations/get-organization-membership'
@@ -92,6 +94,8 @@ app.register(getProjects)
 
 // members routes
 app.register(getOrganizationMembers)
+app.register(updateMember)
+app.register(removeMember)
 
 app
   .listen({
