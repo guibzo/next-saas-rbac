@@ -38,14 +38,22 @@ export const resetPassword = async (app: FastifyInstance) => {
 
       const newPasswordHash = await hash(newPassword, 6)
 
-      await prisma.user.update({
-        where: {
-          id: tokenFromCode.userId,
-        },
-        data: {
-          passwordHash: newPasswordHash,
-        },
-      })
+      await prisma.$transaction([
+        prisma.user.update({
+          where: {
+            id: tokenFromCode.userId,
+          },
+          data: {
+            passwordHash: newPasswordHash,
+          },
+        }),
+
+        prisma.token.delete({
+          where: {
+            id: code,
+          },
+        }),
+      ])
 
       return reply.status(204).send()
     },
