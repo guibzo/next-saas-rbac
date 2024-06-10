@@ -10,7 +10,7 @@ const signInSchema = z.object({
   password: z.string().min(6, 'Please, provide a valid password.'),
 })
 
-export async function signInWithEmailAndPassword(_: unknown, data: FormData) {
+export async function signInWithEmailAndPassword(data: FormData) {
   const result = signInSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
@@ -24,8 +24,6 @@ export async function signInWithEmailAndPassword(_: unknown, data: FormData) {
   }
 
   const { email, password } = result.data
-
-  await new Promise((resolve) => setTimeout(resolve, 2000)) // dev delay
 
   try {
     const { token } = await doSignInWithEmailAndPassword({
