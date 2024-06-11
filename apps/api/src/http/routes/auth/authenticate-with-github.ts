@@ -7,13 +7,13 @@ import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../@errors/bad-request-error'
 
-export const authenticateWithGithub = async (app: FastifyInstance) => {
+export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/sessions/github',
     {
       schema: {
-        tags: ['auth'],
-        summary: 'Authenticate with Github.',
+        tags: ['Auth'],
+        summary: 'Authenticate with GitHub',
         body: z.object({
           code: z.string(),
         }),
@@ -59,28 +59,22 @@ export const authenticateWithGithub = async (app: FastifyInstance) => {
         })
         .parse(githubAccessTokenData)
 
-      const githubUserDataResponse = await fetch(
-        'https://api.github.com/user',
-        {
-          headers: {
-            Authorization: `Bearer ${githubAccessToken}`,
-          },
+      const githubUserResponse = await fetch('https://api.github.com/user', {
+        headers: {
+          Authorization: `Bearer ${githubAccessToken}`,
         },
-      )
+      })
 
-      const githubUserData = await githubUserDataResponse.json()
+      const githubUserData = await githubUserResponse.json()
 
       const {
         id: githubId,
-        avatar_url: avatarUrl,
         name,
         email,
+        avatar_url: avatarUrl,
       } = z
         .object({
-          id: z
-            .number()
-            .int()
-            .transform((id) => id.toString()),
+          id: z.number().int().transform(String),
           avatar_url: z.string().url(),
           name: z.string().nullable(),
           email: z.string().nullable(),
@@ -89,21 +83,19 @@ export const authenticateWithGithub = async (app: FastifyInstance) => {
 
       if (email === null) {
         throw new BadRequestError(
-          'Your GitHub account does not have an email address.',
+          'Your GitHub account must have an email to authenticate.',
         )
       }
 
       let user = await prisma.user.findUnique({
-        where: {
-          email,
-        },
+        where: { email },
       })
 
       if (!user) {
         user = await prisma.user.create({
           data: {
-            name,
             email,
+            name,
             avatarUrl,
           },
         })

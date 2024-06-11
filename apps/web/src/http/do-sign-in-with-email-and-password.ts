@@ -25,6 +25,5 @@ export const doSignInWithEmailAndPassword = async ({
     })
     .json<SignInWithEmailAndPasswordResponse>()
 
-  console.log(result)
   return result
 }
