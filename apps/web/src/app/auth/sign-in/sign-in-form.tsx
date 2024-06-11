@@ -3,7 +3,7 @@
 import { LucideAlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { type FormEvent, useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { LoaderIndicator } from '@/components/loader-indicator'
@@ -12,50 +12,28 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { useFormState } from '@/hooks/use-form-state'
 
 import { signInWithEmailAndPassword } from './actions'
 
-type FormState = {
-  success: boolean
-  message: string | null
-  errors: Record<string, string[]> | null
-}
-
 export const SignInForm = () => {
-  // for now, this was unused because react don't have a option to disable auto form reset upon submit errors
-  // const [state, formAction, isPending] = useActionState(
-  //   signInWithEmailAndPassword,
-  //   { success: false, message: null, errors: null },
-  // )
+  const router = useRouter()
 
-  const [isAuthenticating, startTransition] = useTransition()
-
-  const [formState, setFormState] = useState<FormState>({
-    success: false,
-    message: null,
-    errors: null,
-  })
-
-  const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const data = new FormData(e.currentTarget)
-
-    startTransition(async () => {
-      const result = await signInWithEmailAndPassword(data)
-      setFormState(result)
+  // form state / action (action.ts) / isPending
+  const [{ errors, message, success }, handleSubmit, isAuthenticating] =
+    useFormState(signInWithEmailAndPassword, () => {
+      router.push('/')
     })
-  }
 
   return (
-    <form onSubmit={handleSignIn} className="space-y-4">
-      {formState.success === false && formState.message && (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {success === false && message && (
         <Alert variant="destructive">
           <LucideAlertTriangle className="size-4" />
 
           <AlertTitle>Sign in failed!</AlertTitle>
           <AlertDescription>
-            <p>{formState.message}</p>
+            <p>{message}</p>
           </AlertDescription>
         </Alert>
       )}
@@ -64,9 +42,9 @@ export const SignInForm = () => {
         <Label htmlFor="email">E-mail</Label>
         <Input name="email" id="email" type="email" />
 
-        {formState.errors?.email && (
+        {errors?.email && (
           <p className="text-xs font-medium text-red-500 dark:text-red-400">
-            {formState.errors.email[0]}
+            {errors.email[0]}
           </p>
         )}
       </div>
@@ -75,9 +53,9 @@ export const SignInForm = () => {
         <Label htmlFor="password">Password</Label>
         <Input name="password" id="password" type="password" />
 
-        {formState.errors?.password && (
+        {errors?.password && (
           <p className="text-xs font-medium text-red-500 dark:text-red-400">
-            {formState.errors.password[0]}
+            {errors.password[0]}
           </p>
         )}
 
