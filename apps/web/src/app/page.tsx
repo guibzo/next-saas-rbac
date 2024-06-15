@@ -5,7 +5,9 @@ export default async function Home() {
 
   return (
     <>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <div>
+        <pre>{JSON.stringify(user, null, 2)}</pre>
+      </div>
       <h1 className="text-3xl">Hello world!</h1>
     </>
   )

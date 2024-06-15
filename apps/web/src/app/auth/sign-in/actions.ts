@@ -9,10 +9,12 @@ import { doSignInWithEmailAndPassword } from '@/http/do-sign-in-with-email-and-p
 
 const signInSchema = z.object({
   email: z.string().email('Please, provide a valid e-mail address.'),
-  password: z.string().min(6, 'Please, provide a valid password.'),
+  password: z
+    .string()
+    .min(6, 'Please, provide a password with at least 6 characters.'),
 })
 
-export async function signInWithEmailAndPassword(data: FormData) {
+export async function signInWithEmailAndPasswordAction(data: FormData) {
   const result = signInSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
