@@ -8,13 +8,13 @@ const seed = async () => {
   await prisma.organization.deleteMany()
   await prisma.user.deleteMany()
 
-  const passwordHash = await hash('123456', 1)
+  const passwordHash = await hash('123123', 1)
 
   const user1 = await prisma.user.create({
     data: {
       name: 'John Doe',
       email: 'johndoe@example.com',
-      avatarUrl: 'https://github.com/xbozo.png',
+      avatarUrl: 'https://github.com/guibzo.png',
       passwordHash,
     },
   })
