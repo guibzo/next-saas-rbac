@@ -3,13 +3,13 @@ import { LucideChevronDown, LucideLogOut } from 'lucide-react'
 import { getUserProfile } from '@/auth/get-user-profile'
 import { getNameInitials } from '@/utils/get-name-initials'
 
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '../ui/dropdown-menu'
 
 export const ProfileButton = async () => {
   const { user } = await getUserProfile()
