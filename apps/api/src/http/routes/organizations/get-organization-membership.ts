@@ -25,6 +25,7 @@ export const getOrganizationMembership = async (app: FastifyInstance) => {
                 id: z.string().uuid(),
                 organizationId: z.string().uuid(),
                 role: z.nativeEnum(Role),
+                userId: z.string().uuid(),
               }),
             }),
           },
@@ -38,6 +39,7 @@ export const getOrganizationMembership = async (app: FastifyInstance) => {
           membership: {
             role: membership.role,
             id: membership.id,
+            userId: membership.userId,
             organizationId: membership.organizationId,
           },
         }

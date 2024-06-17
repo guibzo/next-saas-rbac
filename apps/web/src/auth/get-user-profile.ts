@@ -1,16 +1,11 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import { doGetProfile } from '@/http/do-get-profile'
 
-export const isAuthenticated = () => {
-  return Boolean(cookies().get('@saas:token')?.value)
-}
+import { isAuthenticated } from './is-authenticated'
 
-export const auth = async () => {
-  const token = cookies().get('@saas:token')?.value
-
-  if (!token) {
+export const getUserProfile = async () => {
+  if (!isAuthenticated()) {
     redirect('/auth/sign-in')
   }
 
