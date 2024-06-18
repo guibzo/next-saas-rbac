@@ -24,7 +24,6 @@ export const ThemeSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <>
           <Button variant="ghost" size="icon">
             {mounted && resolvedTheme ? (
               <>
@@ -37,7 +36,6 @@ export const ThemeSwitcher = () => {
 
             <span className="sr-only">Toggle theme</span>
           </Button>
-        </>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">

@@ -11,9 +11,9 @@ export const Header = async () => {
   const permissions = await ability()
 
   return (
-    <div className="mx-auto flex max-w-[1200px] items-center justify-between">
+    <div className="mx-auto flex max-w-[1200px] items-center justify-between border-b pb-2">
       <div className="flex items-center gap-3">
-        <LucideCrown className="size-6 text-zinc-950 dark:invert" />
+        <LucideCrown className="size-6 text-primary" />
 
         <LucideSlash className="size-3 -rotate-[24deg] text-border" />
 
