@@ -1,4 +1,5 @@
 import { LucideCrown, LucideSlash } from 'lucide-react'
+import Link from 'next/link'
 
 import { ability } from '@/auth/get-ability'
 
@@ -13,7 +14,9 @@ export const Header = async () => {
   return (
     <div className="mx-auto flex max-w-[1200px] items-center justify-between border-b pb-2">
       <div className="flex items-center gap-3">
-        <LucideCrown className="size-6 text-primary" />
+        <Link href="/">
+          <LucideCrown className="size-6 text-primary" />
+        </Link>
 
         <LucideSlash className="size-3 -rotate-[24deg] text-border" />
 

@@ -6,12 +6,12 @@ This project contains all the necessary boilerplate to setup a multi-tenant SaaS
 
 ```
   // root
-  - pnpm i
-  - pnpm run docker
+  - pnpm install
+  - pnpm run docker:start
 
   // apps/api
   - pnpm run db:migrate
-  - npx prisma db seed
+  - pnpm run db:seed
 
   // root
   - pnpm run dev
