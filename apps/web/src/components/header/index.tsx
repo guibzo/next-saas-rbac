@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { ability } from '@/auth/get-ability'
 
+import { ProjectSwitcher } from '../project-switcher'
 import { Separator } from '../ui/separator'
 import { OrganizationSwitcher } from './organization-switcher'
 import { ProfileButton } from './profile-button'
@@ -22,7 +23,12 @@ export const Header = async () => {
 
         <OrganizationSwitcher />
 
-        {permissions?.can('get', 'Project') && <p>Projetos</p>}
+        {permissions?.can('get', 'Project') && (
+          <>
+            <LucideSlash className="size-3 -rotate-[24deg] text-border" />
+            <ProjectSwitcher />
+          </>
+        )}
       </div>
 
       <div className="flex items-center gap-4">

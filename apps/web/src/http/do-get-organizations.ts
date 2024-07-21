@@ -1,12 +1,9 @@
+import type { Organization } from '@/_types/organization'
+
 import { api } from './api-client'
 
 type GetOrganizationsResponse = {
-  organizations: {
-    id: string
-    name: string
-    slug: string
-    avatarUrl: string | null
-  }[]
+  organizations: Organization[]
 }
 
 export const doGetOrganization = async () => {

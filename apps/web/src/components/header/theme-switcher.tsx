@@ -3,7 +3,6 @@
 import { LucideMoon, LucideSun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
-import { Skeleton } from '../skeleton'
 import { Button } from '../ui/button'
 import {
   DropdownMenu,
@@ -13,21 +12,14 @@ import {
 } from '../ui/dropdown-menu'
 
 export const ThemeSwitcher = () => {
-  const { setTheme, resolvedTheme } = useTheme()
+  const { setTheme } = useTheme()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          {resolvedTheme ? (
-            <>
-              <LucideSun className="size-4 dark:hidden" />
-              <LucideMoon className="hidden size-4 dark:flex" />
-            </>
-          ) : (
-            <Skeleton className="size-4" />
-          )}
-
+          <LucideSun className="size-4 dark:invisible dark:size-0" />
+          <LucideMoon className="invisible size-0 dark:visible dark:size-4" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
