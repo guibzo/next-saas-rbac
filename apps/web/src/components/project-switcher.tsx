@@ -32,8 +32,6 @@ export const ProjectSwitcher = () => {
     enabled: Boolean(orgSlug),
   })
 
-  console.log(projectsResponse)
-
   const currentProject =
     projectsResponse && projectSlug
       ? projectsResponse.projects.find(
