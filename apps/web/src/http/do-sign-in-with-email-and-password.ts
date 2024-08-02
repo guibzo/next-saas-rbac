@@ -13,6 +13,8 @@ export const doSignInWithEmailAndPassword = async ({
   email,
   password,
 }: SignInWithEmailAndPasswordRequest) => {
+  console.log('log')
+
   const result = await api
     .post('sessions/password', {
       body: JSON.stringify({

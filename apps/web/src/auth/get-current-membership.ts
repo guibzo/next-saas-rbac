@@ -1,9 +1,9 @@
 import { doGetMembership } from '@/http/do-get-membership'
 
-import { getCurrentOrganization } from './get-current-organization'
+import { getCurrentOrganizationSlug } from './get-current-organization'
 
 export const getCurrentMembership = async () => {
-  const org = getCurrentOrganization()
+  const org = getCurrentOrganizationSlug()
 
   if (!org) {
     return null

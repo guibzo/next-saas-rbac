@@ -1,13 +1,25 @@
-import type { Organization } from '@/_types/organization'
+import type { Role } from '@saas/auth'
 
 import { api } from './api-client'
 
 type GetOrganizationsResponse = {
-  organizations: Organization[]
+  organizations: {
+    id: string
+    name: string
+    slug: string
+    avatarUrl: string | null
+    role: Role
+  }[]
 }
 
-export const doGetOrganization = async () => {
-  const result = await api.get('organizations').json<GetOrganizationsResponse>()
+export const doGetOrganizations = async () => {
+  const result = await api
+    .get('organizations', {
+      next: {
+        tags: ['organizations'],
+      },
+    })
+    .json<GetOrganizationsResponse>()
 
   return result
 }
