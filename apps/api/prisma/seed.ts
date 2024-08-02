@@ -102,6 +102,33 @@ const seed = async () => {
           ],
         },
       },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+          ],
+        },
+      },
     },
   })
 
@@ -168,6 +195,33 @@ const seed = async () => {
           ],
         },
       },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+          ],
+        },
+      },
     },
   })
 
@@ -230,6 +284,33 @@ const seed = async () => {
             {
               userId: user3.id,
               role: 'MEMBER',
+            },
+          ],
+        },
+      },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user1.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
             },
           ],
         },

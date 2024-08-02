@@ -2,6 +2,7 @@ import { organizationSchema } from '@saas/auth'
 import {
   LucideArrowLeftRight,
   LucideCrown,
+  LucideInbox,
   LucideUserMinus,
 } from 'lucide-react'
 
@@ -37,109 +38,121 @@ export const MembersList = async () => {
       <div className="rounded border">
         <Table>
           <TableBody>
-            {members.map((member) => {
-              const isCurrentMember = membership?.userId === member.userId
-              const isCurrentOrganizationOwner =
-                organization.ownerId === member.userId
-              const isUserAllowedToChangeRoles = permissions?.cannot(
-                'update',
-                'User',
-              )
+            {members.length > 0 &&
+              members.map((member) => {
+                const isCurrentMember = membership?.userId === member.userId
+                const isCurrentOrganizationOwner =
+                  organization.ownerId === member.userId
+                const isUserAllowedToChangeRoles = permissions?.cannot(
+                  'update',
+                  'User',
+                )
 
-              return (
-                <TableRow key={member.id}>
-                  <TableCell className="w-12 py-2.5">
-                    <Avatar className="size-8">
-                      <AvatarFallback />
-                      {member.avatarUrl && (
-                        <AvatarImage
-                          src={member.avatarUrl}
-                          className="aspect-square size-8"
-                        />
-                      )}
-                    </Avatar>
-                  </TableCell>
-
-                  <TableCell className="py-2.5">
-                    <div className="flex flex-col">
-                      <span className="inline-flex items-center gap-2 font-semibold">
-                        {member.name}
-
-                        {isCurrentMember && (
-                          <Badge variant="secondary" className="text-xs">
-                            Me
-                          </Badge>
+                return (
+                  <TableRow key={member.id}>
+                    <TableCell className="w-12 py-2.5">
+                      <Avatar className="size-8">
+                        <AvatarFallback />
+                        {member.avatarUrl && (
+                          <AvatarImage
+                            src={member.avatarUrl}
+                            className="aspect-square size-8"
+                          />
                         )}
+                      </Avatar>
+                    </TableCell>
 
-                        {isCurrentOrganizationOwner && (
-                          <Badge
-                            variant="secondary"
-                            className="inline-flex items-center gap-1 text-xs"
-                          >
-                            <LucideCrown className="size-3 fill-foreground" />
-                            Owner
-                          </Badge>
-                        )}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {member.email}
-                      </span>
-                    </div>
-                  </TableCell>
+                    <TableCell className="py-2.5">
+                      <div className="flex flex-col">
+                        <span className="inline-flex items-center gap-2 font-semibold">
+                          {member.name}
 
-                  <TableCell className="py-2.5">
-                    <div className="flex items-center justify-end gap-2">
-                      {permissions?.can(
-                        'transfer_ownership',
-                        authOrganization,
-                      ) && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          disabled={
-                            isCurrentOrganizationOwner || isCurrentMember
-                          }
-                        >
-                          <LucideArrowLeftRight className="mr-2 size-4" />
-                          Transfer ownership
-                        </Button>
-                      )}
+                          {isCurrentMember && (
+                            <Badge variant="secondary" className="text-xs">
+                              Me
+                            </Badge>
+                          )}
 
-                      <SelectMemberRole
-                        memberId={member.id}
-                        value={member.role}
-                        disabled={
-                          isCurrentMember ||
-                          isCurrentOrganizationOwner ||
-                          isUserAllowedToChangeRoles
-                        }
-                      />
+                          {isCurrentOrganizationOwner && (
+                            <Badge
+                              variant="secondary"
+                              className="inline-flex items-center gap-1 text-xs"
+                            >
+                              <LucideCrown className="size-3 fill-foreground" />
+                              Owner
+                            </Badge>
+                          )}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {member.email}
+                        </span>
+                      </div>
+                    </TableCell>
 
-                      {permissions?.can('delete', 'User') && (
-                        <form
-                          action={removeMemberAction.bind(null, {
-                            memberId: member.id,
-                            // bind so we can assign params in a way that don't call the function, which isn't allowed by Next in relation CS -> SS
-                          })}
-                        >
+                    <TableCell className="py-2.5">
+                      <div className="flex items-center justify-end gap-2">
+                        {permissions?.can(
+                          'transfer_ownership',
+                          authOrganization,
+                        ) && (
                           <Button
-                            disabled={
-                              isCurrentMember || isCurrentOrganizationOwner
-                            }
-                            type="submit"
                             size="sm"
-                            variant="destructive"
+                            variant="ghost"
+                            disabled={
+                              isCurrentOrganizationOwner || isCurrentMember
+                            }
                           >
-                            <LucideUserMinus className="mr-2 size-4" />
-                            Remove
+                            <LucideArrowLeftRight className="mr-2 size-4" />
+                            Transfer ownership
                           </Button>
-                        </form>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
+                        )}
+
+                        <SelectMemberRole
+                          memberId={member.id}
+                          value={member.role}
+                          disabled={
+                            isCurrentMember ||
+                            isCurrentOrganizationOwner ||
+                            isUserAllowedToChangeRoles
+                          }
+                        />
+
+                        {permissions?.can('delete', 'User') && (
+                          <form
+                            action={removeMemberAction.bind(null, {
+                              memberId: member.id,
+                              // bind so we can assign params in a way that don't call the function, which isn't allowed by Next in relation CS -> SS
+                            })}
+                          >
+                            <Button
+                              disabled={
+                                isCurrentMember || isCurrentOrganizationOwner
+                              }
+                              type="submit"
+                              size="sm"
+                              variant="destructive"
+                            >
+                              <LucideUserMinus className="mr-2 size-4" />
+                              Remove
+                            </Button>
+                          </form>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+
+            {members.length === 0 && (
+              <TableRow>
+                <TableCell>
+                  <div className="flex flex-col items-center justify-center gap-3 p-4 text-muted-foreground">
+                    <LucideInbox className="size-10" />
+                    No members found
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

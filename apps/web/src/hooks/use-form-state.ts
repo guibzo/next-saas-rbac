@@ -1,6 +1,7 @@
 // since useActionState doesn't have till now a option to disable auto form cleanup, this custom is used instead
 
 import { type FormEvent, useState, useTransition } from 'react'
+import { requestFormReset } from 'react-dom'
 
 type FormState = {
   success: boolean
@@ -23,10 +24,11 @@ export const useFormState = (
     },
   )
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-    const data = new FormData(e.currentTarget)
+    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
 
     startTransition(async () => {
       const result = await action(data)
@@ -37,6 +39,8 @@ export const useFormState = (
 
       setFormState(result)
     })
+
+    requestFormReset(form)
   }
 
   return [formState, handleSubmit, isPending] as const

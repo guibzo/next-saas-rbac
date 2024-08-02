@@ -1,6 +1,6 @@
 'use client'
 
-import { type Role, roleSchema } from '@saas/auth'
+import { type Role } from '@saas/auth'
 import type { ComponentProps } from 'react'
 
 import {
@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { formatRoleName } from '@/utils/format-role-name'
+import { getRolesList } from '@/utils/get-roles-list'
 
 import { updateMemberAction } from './actions'
 
@@ -21,7 +23,7 @@ export const SelectMemberRole = ({
   memberId,
   ...props
 }: SelectMemberRoleProps) => {
-  const rolesList = roleSchema.options.map((option) => option.value)
+  const rolesList = getRolesList()
 
   const updateMemberRole = async (role: Role) => {
     await updateMemberAction({
@@ -38,10 +40,11 @@ export const SelectMemberRole = ({
 
       <SelectContent>
         {rolesList.map((role) => {
-          const formattedRoleName =
-            role.charAt(0).toUpperCase() + role.slice(1).toLowerCase()
-
-          return <SelectItem value={role}>{formattedRoleName}</SelectItem>
+          return (
+            <SelectItem key={role} value={role}>
+              {formatRoleName(role)}
+            </SelectItem>
+          )
         })}
       </SelectContent>
     </Select>

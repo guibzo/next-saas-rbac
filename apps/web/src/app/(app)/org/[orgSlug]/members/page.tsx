@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
+
 import { ability } from '@/auth/get-ability'
 
 import { Invites } from './invites'
 import { MembersList } from './members-list'
+
+export const metadata: Metadata = {
+  title: 'Members',
+}
 
 export default async function Members() {
   const permissions = await ability()
