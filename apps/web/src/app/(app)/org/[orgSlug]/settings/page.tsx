@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import { ability } from '@/auth/get-ability'
 import { getCurrentOrganizationSlug } from '@/auth/get-current-organization'
 import {
@@ -12,6 +14,10 @@ import { doGetOrganization } from '@/http/do-get-organization'
 import { OrganizationForm } from '../../organization-form'
 import { Billing } from './billing'
 import { ShutdownOrganizationButton } from './shutdown-organization-button'
+
+export const metadata: Metadata = {
+  title: 'Settings',
+}
 
 export default async function Settings() {
   const currentOrg = getCurrentOrganizationSlug()

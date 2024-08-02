@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
+
 import { Header } from '@/components/header'
+
+export const metadata: Metadata = {
+  title: 'Home',
+}
 
 export default async function Home() {
   return (
