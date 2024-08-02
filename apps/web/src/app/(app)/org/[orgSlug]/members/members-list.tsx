@@ -16,6 +16,7 @@ import { doGetOrganization } from '@/http/do-get-organization'
 import { doGetOrganizationMembers } from '@/http/do-get-organization-members'
 
 import { removeMemberAction } from './actions'
+import { SelectMemberRole } from './select-member-role'
 
 export const MembersList = async () => {
   const currentOrg = getCurrentOrganizationSlug()
@@ -40,6 +41,10 @@ export const MembersList = async () => {
               const isCurrentMember = membership?.userId === member.userId
               const isCurrentOrganizationOwner =
                 organization.ownerId === member.userId
+              const isUserAllowedToChangeRoles = permissions?.cannot(
+                'update',
+                'User',
+              )
 
               return (
                 <TableRow key={member.id}>
@@ -88,11 +93,27 @@ export const MembersList = async () => {
                         'transfer_ownership',
                         authOrganization,
                       ) && (
-                        <Button size="sm" variant="ghost">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          disabled={
+                            isCurrentOrganizationOwner || isCurrentMember
+                          }
+                        >
                           <LucideArrowLeftRight className="mr-2 size-4" />
                           Transfer ownership
                         </Button>
                       )}
+
+                      <SelectMemberRole
+                        memberId={member.id}
+                        value={member.role}
+                        disabled={
+                          isCurrentMember ||
+                          isCurrentOrganizationOwner ||
+                          isUserAllowedToChangeRoles
+                        }
+                      />
 
                       {permissions?.can('delete', 'User') && (
                         <form
