@@ -8,9 +8,9 @@ export default function middleware(request: NextRequest) {
   if (pathname.startsWith('/org')) {
     const [, , slug] = pathname.split('/')
 
-    response.cookies.set('@saas:org', slug)
+    response.cookies.set('org', slug)
   } else {
-    response.cookies.delete('@saas:org')
+    response.cookies.delete('org')
   }
 
   return response

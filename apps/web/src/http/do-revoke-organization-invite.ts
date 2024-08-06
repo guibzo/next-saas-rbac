@@ -11,9 +11,5 @@ export const doRevokeOrganizationInvite = async ({
   inviteId,
   orgSlug,
 }: RemoveOrganizationInviteRequest): Promise<RemoveOrganizationInviteResponse> => {
-  await api.delete(`organizations/${orgSlug}/invites/${inviteId}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  await api.delete(`organizations/${orgSlug}/invites/${inviteId}`)
 }

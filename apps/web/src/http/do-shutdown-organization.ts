@@ -9,9 +9,5 @@ type ShutdownOrganizationResponse = void
 export const doShutdownOrganization = async ({
   orgSlug,
 }: ShutdownOrganizationRequest): Promise<ShutdownOrganizationResponse> => {
-  await api.delete(`organizations/${orgSlug}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  await api.delete(`organizations/${orgSlug}`)
 }

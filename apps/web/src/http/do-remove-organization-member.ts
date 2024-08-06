@@ -11,9 +11,5 @@ export const doRemoveOrganizationMember = async ({
   orgSlug,
   memberId,
 }: RemoveOrganizationMemberRequest): Promise<RemoveOrganizationMemberResponse> => {
-  await api.delete(`organizations/${orgSlug}/members/${memberId}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  await api.delete(`organizations/${orgSlug}/members/${memberId}`)
 }

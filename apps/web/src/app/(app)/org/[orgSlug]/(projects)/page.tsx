@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold ">Org projects</h1>
+        <h1 className="text-2xl font-bold ">Organization projects</h1>
 
         {permissions?.can('create', 'Project') && (
           <Button size="sm" asChild>

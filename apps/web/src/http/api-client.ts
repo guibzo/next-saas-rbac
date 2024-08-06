@@ -22,7 +22,7 @@ export const api = ky.create({
           cookiesStore = serverCookies
         }
 
-        const token = getCookie('@saas:token', { cookies: cookiesStore })
+        const token = getCookie('token', { cookies: cookiesStore })
 
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`)

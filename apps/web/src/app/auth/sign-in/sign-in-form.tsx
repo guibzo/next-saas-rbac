@@ -3,7 +3,7 @@
 import { LucideAlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { LoaderIndicator } from '@/components/loader-indicator'
@@ -19,6 +19,7 @@ import { signInWithEmailAndPasswordAction } from './actions'
 
 export const SignInForm = () => {
   const router = useRouter()
+  const params = useSearchParams()
 
   // form state / action (action.ts) / isPending
   const [{ errors, message, success }, handleSubmit, isAuthenticating] =
@@ -42,7 +43,12 @@ export const SignInForm = () => {
 
         <div className="space-y-1">
           <Label htmlFor="email">E-mail</Label>
-          <Input name="email" id="email" type="email" />
+          <Input
+            name="email"
+            id="email"
+            type="email"
+            defaultValue={params.get('email') ?? undefined}
+          />
 
           {errors?.email && (
             <p className="text-xs font-medium text-red-500 dark:text-red-400">
