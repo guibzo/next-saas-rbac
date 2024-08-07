@@ -6,6 +6,7 @@ import { ability } from '@/auth/get-ability'
 import { ProjectSwitcher } from '../project-switcher'
 import { Separator } from '../ui/separator'
 import { OrganizationSwitcher } from './organization-switcher'
+import { PendingInvites } from './pending-invites'
 import { ProfileButton } from './profile-button'
 import { ThemeSwitcher } from './theme-switcher'
 
@@ -32,10 +33,12 @@ export const Header = async () => {
       </div>
 
       <div className="flex items-center gap-4">
-        <ThemeSwitcher />
+        <div className="flex items-center gap-1.5">
+          <PendingInvites />
+          <ThemeSwitcher />
+        </div>
 
         <Separator orientation="vertical" className="h-5" />
-
         <ProfileButton />
       </div>
     </div>

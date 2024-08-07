@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { LucideCheckCircle, LucideLogIn } from 'lucide-react'
+import { LucideCheckCircle, LucideLogIn, LucideLogOut } from 'lucide-react'
 import { cookies } from 'next/headers'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { getUserProfile } from '@/auth/get-user-profile'
@@ -9,8 +10,8 @@ import { isAuthenticated } from '@/auth/is-authenticated'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { doAcceptInvite } from '@/http/do-accept-invite'
-import { doGetInvite } from '@/http/do-get-invite'
+import { doAcceptOrgInvite } from '@/http/do-accept-org-invite'
+import { doGetInviteDetails } from '@/http/do-get-invite-details'
 
 dayjs.extend(relativeTime)
 
@@ -23,7 +24,7 @@ type InvitePageProps = {
 export default async function InvitePage({ params }: InvitePageProps) {
   const inviteId = params.inviteId
 
-  const { invite } = await doGetInvite(inviteId)
+  const { invite } = await doGetInviteDetails(inviteId)
   const isUserAuthenticated = isAuthenticated()
 
   let currentUser = null
@@ -48,7 +49,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
   const acceptInviteAction = async () => {
     'use server'
 
-    await doAcceptInvite({ inviteId })
+    await doAcceptOrgInvite({ inviteId })
 
     redirect('/')
   }
@@ -99,6 +100,36 @@ export default async function InvitePage({ params }: InvitePageProps) {
               Join {invite.organization.name}
             </Button>
           </form>
+        )}
+
+        {isUserAuthenticated && !isUserAuthenticatedWithSameEmailAsInvite && (
+          <div className="space-y-4">
+            <p className="text-balance text-center leading-relaxed text-muted-foreground">
+              This invite was sent to
+              <span className="font-medium text-foreground">
+                {invite.email}
+              </span>{' '}
+              but you are currenctly authenticated as
+              <span className="font-medium text-foreground">
+                {currentUser?.email}
+              </span>
+              .
+            </p>
+
+            <div className="space-y-2">
+              <Button className="w-full" variant="secondary" asChild>
+                {/* a because Link would prefetch */}
+                <a href="/api/auth/sign-out">
+                  <LucideLogOut className="mr-2 size-4" />
+                  Sign out
+                </a>
+              </Button>
+
+              <Button className="w-full" variant="outline" asChild>
+                <Link href="/">Back to dashboard</Link>
+              </Button>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@ import type { Role } from '@saas/auth'
 
 import { api } from './api-client'
 
-type GetInviteResponse = {
+type GetInviteDetailsResponse = {
   invite: {
     id: string
     email: string
@@ -19,8 +19,10 @@ type GetInviteResponse = {
   }
 }
 
-export const doGetInvite = async (inviteId: string) => {
-  const result = await api.get(`invites/${inviteId}`).json<GetInviteResponse>()
+export const doGetInviteDetails = async (inviteId: string) => {
+  const result = await api
+    .get(`invites/${inviteId}`)
+    .json<GetInviteDetailsResponse>()
 
   return result
 }

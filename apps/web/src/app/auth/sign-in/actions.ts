@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
-import { doAcceptInvite } from '@/http/do-accept-invite'
+import { doAcceptOrgInvite } from '@/http/do-accept-org-invite'
 import { doSignInWithEmailAndPassword } from '@/http/do-sign-in-with-email-and-password'
 
 const signInSchema = z.object({
@@ -45,7 +45,7 @@ export async function signInWithEmailAndPasswordAction(data: FormData) {
 
     if (inviteId) {
       try {
-        await doAcceptInvite({ inviteId })
+        await doAcceptOrgInvite({ inviteId })
 
         cookies().delete('inviteId')
       } catch {}

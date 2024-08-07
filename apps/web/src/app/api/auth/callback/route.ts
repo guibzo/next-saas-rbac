@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { doAcceptInvite } from '@/http/do-accept-invite'
+import { doAcceptOrgInvite } from '@/http/do-accept-org-invite'
 import { doSignInWithGitHub } from '@/http/do-sign-in-with-github'
 
 export async function GET(request: NextRequest) {
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
   if (inviteId) {
     try {
-      await doAcceptInvite({ inviteId })
+      await doAcceptOrgInvite({ inviteId })
 
       cookies().delete('inviteId')
     } catch {}
