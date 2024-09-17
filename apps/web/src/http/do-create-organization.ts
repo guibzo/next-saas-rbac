@@ -14,13 +14,10 @@ export const doCreateOrganization = async ({
   shouldAttachUsersByDomain,
 }: CreateOrganizationRequest): Promise<CreateOrganizationResponse> => {
   await api.post('organizations', {
-    body: JSON.stringify({
+    json: {
       shouldAttachUsersByDomain,
       name,
       domain,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   })
 }

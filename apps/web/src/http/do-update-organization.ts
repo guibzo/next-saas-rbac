@@ -16,13 +16,10 @@ export const doUpdateOrganization = async ({
   shouldAttachUsersByDomain,
 }: UpdateOrganizationRequest): Promise<UpdateOrganizationResponse> => {
   await api.put(`organizations/${orgSlug}`, {
-    body: JSON.stringify({
+    json: {
       shouldAttachUsersByDomain,
       name,
       domain,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   })
 }

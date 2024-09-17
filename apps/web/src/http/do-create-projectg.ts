@@ -14,12 +14,9 @@ export const doCreateProject = async ({
   orgSlug,
 }: CreateProjectRequest): Promise<CreateProjectResponse> => {
   await api.post(`organizations/${orgSlug}/projects`, {
-    body: JSON.stringify({
+    json: {
       name,
       description,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   })
 }

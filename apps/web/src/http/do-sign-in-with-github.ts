@@ -11,11 +11,8 @@ type SignInWithGitHubResponse = {
 export const doSignInWithGitHub = async ({ code }: SignInWithGitHubRequest) => {
   const result = await api
     .post('sessions/github', {
-      body: JSON.stringify({
+      json: {
         code,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
       },
     })
     .json<SignInWithGitHubResponse>()

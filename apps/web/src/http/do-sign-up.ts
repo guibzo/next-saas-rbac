@@ -14,13 +14,10 @@ export const doSignUp = async ({
   password,
 }: SignUpRequest): Promise<SignUpResponse> => {
   await api.post('users', {
-    body: JSON.stringify({
+    json: {
       email,
       name,
       password,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   })
 }

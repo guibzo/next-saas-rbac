@@ -17,12 +17,9 @@ export const doSignInWithEmailAndPassword = async ({
 
   const result = await api
     .post('sessions/password', {
-      body: JSON.stringify({
+      json: {
         email,
         password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
       },
     })
     .json<SignInWithEmailAndPasswordResponse>()

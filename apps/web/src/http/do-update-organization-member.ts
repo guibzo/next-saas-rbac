@@ -16,11 +16,8 @@ export const doUpdateOrganizationMember = async ({
   role,
 }: UpdateOrganizationMemberRequest): Promise<UpdateOrganizationMemberResponse> => {
   await api.put(`organizations/${orgSlug}/members/${memberId}`, {
-    body: JSON.stringify({
+    json: {
       role,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   })
 }

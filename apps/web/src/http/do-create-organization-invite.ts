@@ -19,12 +19,9 @@ export const doCreateOrganizationInvite = async ({
 }: CreateOrganizationInviteRequest) => {
   await api
     .post(`organizations/${orgSlug}/invites`, {
-      body: JSON.stringify({
+      json: {
         email,
         role,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
       },
     })
     .json<CreateOrganizationInviteResponse>()
